@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace MaxPrinter
 {
-    class Prod
+    public class Prod
     {
-        public String codDesc { get; set; };
-        public String codBar { get; set; };
+        public String codDesc { get; set; }
+        public String codBar { get; set; }
     }
 }
