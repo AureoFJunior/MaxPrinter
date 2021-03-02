@@ -40,6 +40,7 @@ namespace MaxPrinter
             this.button1 = new System.Windows.Forms.Button();
             this.txtQtd = new System.Windows.Forms.NumericUpDown();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.lblPeso = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.txtQtd)).BeginInit();
             this.panel1.SuspendLayout();
@@ -49,9 +50,10 @@ namespace MaxPrinter
             // 
             this.txtCod.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(212)))), ((int)(((byte)(200)))));
             this.txtCod.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtCod.Location = new System.Drawing.Point(182, 36);
+            this.txtCod.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtCod.Location = new System.Drawing.Point(217, 46);
             this.txtCod.Name = "txtCod";
-            this.txtCod.Size = new System.Drawing.Size(138, 16);
+            this.txtCod.Size = new System.Drawing.Size(138, 43);
             this.txtCod.TabIndex = 0;
             this.txtCod.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtCod_KeyDown);
             // 
@@ -59,10 +61,12 @@ namespace MaxPrinter
             // 
             this.txtTara.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(212)))), ((int)(((byte)(200)))));
             this.txtTara.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtTara.Location = new System.Drawing.Point(182, 105);
+            this.txtTara.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtTara.Location = new System.Drawing.Point(217, 144);
             this.txtTara.Name = "txtTara";
-            this.txtTara.Size = new System.Drawing.Size(138, 16);
+            this.txtTara.Size = new System.Drawing.Size(138, 43);
             this.txtTara.TabIndex = 1;
+            this.txtTara.Text = "2,100";
             this.txtTara.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtTara_KeyDown);
             // 
             // label1
@@ -92,7 +96,7 @@ namespace MaxPrinter
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(206)))), ((int)(((byte)(176)))), ((int)(((byte)(156)))));
-            this.label3.Location = new System.Drawing.Point(182, 82);
+            this.label3.Location = new System.Drawing.Point(182, 114);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(102, 20);
             this.label3.TabIndex = 5;
@@ -103,7 +107,7 @@ namespace MaxPrinter
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Century Gothic", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(206)))), ((int)(((byte)(176)))), ((int)(((byte)(156)))));
-            this.label4.Location = new System.Drawing.Point(182, 154);
+            this.label4.Location = new System.Drawing.Point(182, 214);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(174, 20);
             this.label4.TabIndex = 6;
@@ -119,7 +123,7 @@ namespace MaxPrinter
             this.btnPrint.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(206)))), ((int)(((byte)(176)))), ((int)(((byte)(156)))));
             this.btnPrint.Image = ((System.Drawing.Image)(resources.GetObject("btnPrint.Image")));
             this.btnPrint.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnPrint.Location = new System.Drawing.Point(5, 128);
+            this.btnPrint.Location = new System.Drawing.Point(5, 192);
             this.btnPrint.Name = "btnPrint";
             this.btnPrint.Size = new System.Drawing.Size(160, 42);
             this.btnPrint.TabIndex = 3;
@@ -138,7 +142,7 @@ namespace MaxPrinter
             this.button1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(206)))), ((int)(((byte)(176)))), ((int)(((byte)(156)))));
             this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
             this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.button1.Location = new System.Drawing.Point(5, 180);
+            this.button1.Location = new System.Drawing.Point(5, 256);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(160, 42);
             this.button1.TabIndex = 4;
@@ -151,9 +155,10 @@ namespace MaxPrinter
             // 
             this.txtQtd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(212)))), ((int)(((byte)(200)))));
             this.txtQtd.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtQtd.Location = new System.Drawing.Point(182, 184);
+            this.txtQtd.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtQtd.Location = new System.Drawing.Point(217, 247);
             this.txtQtd.Name = "txtQtd";
-            this.txtQtd.Size = new System.Drawing.Size(138, 19);
+            this.txtQtd.Size = new System.Drawing.Size(138, 46);
             this.txtQtd.TabIndex = 2;
             this.txtQtd.Value = new decimal(new int[] {
             1,
@@ -164,24 +169,36 @@ namespace MaxPrinter
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(13)))), ((int)(((byte)(8)))));
+            this.panel1.Controls.Add(this.lblPeso);
             this.panel1.Controls.Add(this.panel2);
             this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.btnPrint);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(176, 234);
+            this.panel1.Size = new System.Drawing.Size(176, 310);
             this.panel1.TabIndex = 9;
             this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseDown);
             this.panel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseMove);
             this.panel1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseUp);
+            // 
+            // lblPeso
+            // 
+            this.lblPeso.AutoSize = true;
+            this.lblPeso.Font = new System.Drawing.Font("Segoe UI", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblPeso.ForeColor = System.Drawing.Color.White;
+            this.lblPeso.Location = new System.Drawing.Point(27, 98);
+            this.lblPeso.Name = "lblPeso";
+            this.lblPeso.Size = new System.Drawing.Size(115, 40);
+            this.lblPeso.TabIndex = 11;
+            this.lblPeso.Text = "00,0 KG";
             // 
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(25)))), ((int)(((byte)(14)))));
             this.panel2.Location = new System.Drawing.Point(166, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(2, 236);
+            this.panel2.Size = new System.Drawing.Size(2, 310);
             this.panel2.TabIndex = 10;
             // 
             // Form1
@@ -189,7 +206,7 @@ namespace MaxPrinter
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(13)))), ((int)(((byte)(8)))));
-            this.ClientSize = new System.Drawing.Size(367, 234);
+            this.ClientSize = new System.Drawing.Size(416, 322);
             this.Controls.Add(this.txtQtd);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label3);
@@ -198,6 +215,7 @@ namespace MaxPrinter
             this.Controls.Add(this.txtCod);
             this.Controls.Add(this.label2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
@@ -225,6 +243,7 @@ namespace MaxPrinter
         private System.Windows.Forms.NumericUpDown txtQtd;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label lblPeso;
     }
 }
 

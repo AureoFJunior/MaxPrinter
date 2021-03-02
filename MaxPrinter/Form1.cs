@@ -18,11 +18,25 @@ namespace MaxPrinter
     public partial class Form1 : Form
     {
         int mov, x, y;
-        private const String COM = "COM1";
+        private const String COM = "COM2";
         private static String pesoBruto = "";
+        private SerialPort mPortaSerial;
         public Form1()
         {
             InitializeComponent();
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            //obterPesoBruto("PB:   40,5kg PL:    0,0kg T:    0,0kg");
+            openSerial();
+        }
+
+        protected override void OnFormClosed(FormClosedEventArgs e)
+        {
+            base.OnFormClosed(e);
+            mPortaSerial?.Close();
         }
 
         protected override void WndProc(ref Message m) //another way to move windows form
@@ -73,9 +87,9 @@ namespace MaxPrinter
 
         private void btnPrint_Click(object sender, EventArgs e)
         {
-            obterPesoBruto("PB:+ 35.66kgPB:+ 35.66kgPB:+ 35.66kg "); 
+            //obterPesoBruto("PB:+ 35.66kgPB:+ 35.66kgPB:+ 35.66kg "); 
                 
-            openSerial();
+            
 
 
             var prod = getBd(getInformations());
@@ -168,8 +182,8 @@ namespace MaxPrinter
 
             String sql = $"select prod_descrpdv, prod_codbarras from produtos where prod_codigo = {obj.codProd} ";
 
-            NpgsqlConnection connBd = new NpgsqlConnection("Server = 127.0.0.1; Port = 5432; " +
-                                                           "Database = friosul; User Id = postgres;" +
+            NpgsqlConnection connBd = new NpgsqlConnection("Server = 192.168.1.100; Port = 5432; " +
+                                                           "Database = interativo; User Id = postgres;" +
                                                            " Password = 123456");
 
             var cmd = new NpgsqlCommand(sql, connBd);
@@ -363,7 +377,7 @@ namespace MaxPrinter
                 else
                 {
                     var pesoLiq = pesoBruto - pesoTara;
-                    A_Prn_Text_TrueType(55, 135, 30, "Arial", 1, 50, 0, 0, 0, "AA5", pesoLiq.ToString().Trim() + " KG", 1);
+                    A_Prn_Text_TrueType(55, 135, 30, "Arial", 1, 50, 0, 0, 0, "AA5", pesoLiq.ToString("0.00").Trim() + " KG", 1);
 
 
                     A_Draw_Line('A', 45, 120, 280, 1);
@@ -389,47 +403,80 @@ namespace MaxPrinter
 
         public void openSerial()
         {
-            SerialPort codSer = new SerialPort(COM);
+            mPortaSerial = new SerialPort(COM);
 
-            codSer.BaudRate = 9600;
-            codSer.Parity = Parity.None;
-            codSer.StopBits = StopBits.One;
-            codSer.DataBits = 8;
-            codSer.Handshake = Handshake.None;
-            codSer.RtsEnable = true;
+            mPortaSerial.BaudRate = 9600;
+            mPortaSerial.Parity = Parity.None;
+            mPortaSerial.StopBits = StopBits.One;
+            mPortaSerial.DataBits = 8;
+            mPortaSerial.Handshake = Handshake.None;
+            mPortaSerial.RtsEnable = true;
 
-            codSer.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
+            mPortaSerial.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
 
-            codSer.Open();
+            mPortaSerial.Open();
 
         }
 
         
 
-        private static void DataReceivedHandler(
+        private void DataReceivedHandler(
                        object sender,
                        SerialDataReceivedEventArgs e)
         {
             
             SerialPort sp = (SerialPort)sender;
-            var aux = sp.ReadExisting();
+            var aux = sp.ReadLine();
 
-            obterPesoBruto(aux);
+            var lista = aux.Split("\n");
+            var linhaOK = lista.Where(t => t.StartsWith("PB")).ToList().LastOrDefault();
+
+            if (String.IsNullOrEmpty(linhaOK)) return;
+            if (linhaOK.Length < 35) return;
+
+            //System.Windows.Forms.MessageBox.Show(linhaOK);
+            var peso = obterPesoBruto(linhaOK);
+
+            //var in2 = (MethodInvoker)(() => );
+            //th0is.Invoke(in2);
+
+            var invoke = (MethodInvoker)(() => lblPeso.Text = peso.ToString("0.00") + " KG");
+            lblPeso.Invoke(invoke);
+
+            
+
             //obterPesoBruto("PB:+666666kg ");
 
 
         }
 
-        private static void obterPesoBruto(String pesoLido)
+        private static Double obterPesoBruto(String pesoLido)
         {
-            String tmp = pesoLido.Substring(4, pesoLido.Length - 29 - 5);
-            Convert.ToDouble(tmp);
-            //pesoLido.Substring(0, pesoLido.Length - 3);
-
-            if (pesoLido != null)
+            Double convertido = -1.0;
+            //String tmp = pesoLido.Substring(4, pesoLido.Length - 29 - 5);
+            if (pesoLido.Length >= 35)
             {
-                pesoBruto = tmp;
+                try
+                {
+                    String tmp = pesoLido.Substring(4, pesoLido.Length - 29 - 3);
+                    //System.Windows.Forms.MessageBox.Show(tmp.Trim());
+                    convertido = Convert.ToDouble(tmp.Trim());
+                    //pesoLido.Substring(0, pesoLido.Length - 3);
+
+                    if (pesoLido != null)
+                    {
+                        pesoBruto = tmp;
+                    }
+                }
+                catch (Exception e) {
+                    System.Windows.Forms.MessageBox.Show($"Peso lido {pesoLido} \n {e.Message.ToString()}");
+                }
+
+
             }
+            
+
+            return convertido;
         }
 
     }
