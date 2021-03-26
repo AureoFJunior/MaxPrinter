@@ -20,6 +20,7 @@ namespace MaxPrinter
         int mov, x, y;
         private const String COM = "COM2";
         private static String pesoBruto = "";
+        private static String pesoTarado = "";
         private SerialPort mPortaSerial;
         public Form1()
         {
@@ -88,8 +89,8 @@ namespace MaxPrinter
         private void btnPrint_Click(object sender, EventArgs e)
         {
             //obterPesoBruto("PB:+ 35.66kgPB:+ 35.66kgPB:+ 35.66kg "); 
-                
-            
+
+
 
 
             var prod = getBd(getInformations());
@@ -102,14 +103,14 @@ namespace MaxPrinter
 
                 openTheDoor();
 
+                //Imprimir(prod.codDesc, DateTime.Now, prod.codBar, aux.pesoTara, pesoBruto, pesoTarado);
                 Imprimir(prod.codDesc, DateTime.Now, prod.codBar, aux.pesoTara, pesoBruto);
 
 
 
 
-
                 closeTheDoor();
-                
+
             }
 
         }
@@ -156,14 +157,14 @@ namespace MaxPrinter
                 objInf.pesoTara = 0;
             }
 
-           
+
             if (Convert.ToDouble(txtQtd.Value) > 0)
             {
-                    
+
                 objInf.qtdeCaixa = Convert.ToInt32(txtQtd.Value);
                 objInf.pesoTara = objInf.pesoTara * objInf.qtdeCaixa;
-                    
-                    
+
+
 
             }
             else
@@ -283,20 +284,8 @@ namespace MaxPrinter
             else
             {
                 throw new Exception("A Impressora não está conectada");
-                //System.IO.Directory.CreateDirectory(szSavePath);
-                //ret = A_CreatePrn(0, szSaveFile);// open file.
-                //strmsg += "Open ";
-                //strmsg += szSaveFile;
-                //if (0 != ret)
-                //{
-                //    strmsg += " file fail!";
-                //}
-                //else
-                //{
-                //    strmsg += " file succeed!";
-                //}
+                
             }
-            //MessageBox.Show(strmsg);
             if (0 != ret)
             {
                 throw new Exception("Erro:" + strmsg);
@@ -338,9 +327,13 @@ namespace MaxPrinter
         }
 
         public static void Imprimir(String nomeProd, DateTime data, String codProd, Double pesoTara, String peel)
+            //Imprimir(String nomeProd, DateTime data, String codProd, Double pesoTara, String peel, String peel2)
         {
-            var pesoAux = peel.Replace('.',',');
+            var pesoAux = peel.Replace('.', ',');
             var pesoBruto = Convert.ToDouble(pesoAux);
+
+            //var pesoAux2 = peel2.Replace('.', ',');
+            //var pesoTaradoF = Convert.ToDouble(pesoAux2);
 
 
 
@@ -352,21 +345,20 @@ namespace MaxPrinter
             A_Del_Graphic(1, "*");// delete all picture.
             A_Clear_Memory();// clear memory.
 
-            //A_Set_LabelForSmartPrint
-            //A_Set_LabelForSmartPrint(115, 30);
-            //A_Set_LabelForSmartPrint(1140, 40);
+            
 
 
 
-            A_Draw_Box('A', 45, 20, 330, 200, 1, 1);
-            A_Prn_Text_TrueType(65, 200, 32, "Arial", 1, 700, 0, 0, 0, "AA1", "AGRO IND FRIOSUL LTDA", 1);
-            //A_Draw_Line('A', 45, 365, 300, 5);
+            A_Draw_Box('A', 45, 0, 330, 200, 1, 1);
+            A_Prn_Text_TrueType(65, 170, 32, "Arial", 1, 700, 0, 0, 0, "AA1", "AGRO IND FRIOSUL LTDA", 1);
 
 
 
-            A_Prn_Text_TrueType(55, 180, 25, "Arial", 1, 750, 0, 0, 0, "AA2", "Produto", 1);
-            A_Prn_Text_TrueType(55, 165, 30, "Arial", 1, 50, 0, 0, 0, "AA4", nomeProd.Trim(), 1);
-            A_Prn_Text_TrueType(55, 150, 25, "Arial", 1, 750, 0, 0, 0, "AA8", "Peso Líquido", 1);
+            A_Prn_Text_TrueType(55, 160, 25, "Arial", 1, 750, 0, 0, 0, "AA2", "Produto", 1);
+            A_Prn_Text_TrueType(55, 145, 30, "Arial", 1, 50, 0, 0, 0, "AA4", nomeProd.Trim(), 1);
+            A_Prn_Text_TrueType(55, 130, 25, "Arial", 1, 750, 0, 0, 0, "AA8", "Peso Líquido:", 1);
+            A_Prn_Text_TrueType(200, 130, 25, "Arial", 1, 750, 0, 0, 0, "AA8", "Peso Tara:", 1);
+
 
             if (pesoTara >= 0)
             {
@@ -377,22 +369,23 @@ namespace MaxPrinter
                 else
                 {
                     var pesoLiq = pesoBruto - pesoTara;
-                    A_Prn_Text_TrueType(55, 135, 30, "Arial", 1, 50, 0, 0, 0, "AA5", pesoLiq.ToString("0.00").Trim() + " KG", 1);
-
+                    A_Prn_Text_TrueType(150, 130, 30, "Arial", 1, 50, 0, 0, 0, "AA5", pesoLiq.ToString("0.00").Trim() + " KG", 1);
+                    //A_Prn_Text_TrueType(250, 130, 30, "Arial", 1, 50, 0, 0, 0, "AA5", pesoTaradoF.ToString("0.00").Trim() + " KG", 1); 
+                    A_Prn_Text_TrueType(250, 130, 30, "Arial", 1, 50, 0, 0, 0, "AA5", pesoTara.ToString("0.00").Trim() + " KG", 1);
 
                     A_Draw_Line('A', 45, 120, 280, 1);
-                    A_Prn_Text_TrueType(55, 105, 30, "Arial", 1, 50, 0, 0, 0, "AA6", data.ToString(), 1);
+                    A_Prn_Text_TrueType(55, 85, 30, "Arial", 1, 50, 0, 0, 0, "AA6", data.ToString(), 1);
 
                     var cod = codProd.Substring(codProd.Length - 5);
                     var liq = (pesoLiq * 100).ToString("0");
-                    A_Prn_Barcode(55, 30, 1, 'F', 0, 0, 50, 'B', 1, $"2{cod}{liq.PadLeft(6, '0')}");
+                    A_Prn_Barcode(55, 20, 1, 'F', 0, 0, 50, 'B', 1, $"2{cod}{liq.PadLeft(6, '0')}");
 
                     A_Print_Out(1, 1, 1, 1);
                 }
             }
             else
             {
-                A_Prn_Text_TrueType(55, 135, 30, "Arial", 1, 50, 0, 0, 0, "AA5", pesoBruto.ToString().Trim() + " KG", 1);
+                A_Prn_Text_TrueType(150, 130, 30, "Arial", 1, 50, 0, 0, 0, "AA5", pesoBruto.ToString().Trim() + " KG", 1);
 
                 A_Print_Out(1, 1, 1, 1);
             }
@@ -418,13 +411,13 @@ namespace MaxPrinter
 
         }
 
-        
+
 
         private void DataReceivedHandler(
                        object sender,
                        SerialDataReceivedEventArgs e)
         {
-            
+
             SerialPort sp = (SerialPort)sender;
             var aux = sp.ReadLine();
 
@@ -432,25 +425,68 @@ namespace MaxPrinter
             var linhaOK = lista.Where(t => t.StartsWith("PB")).ToList().LastOrDefault();
 
             if (String.IsNullOrEmpty(linhaOK)) return;
+
+            //Arrumar bytes!!
             if (linhaOK.Length < 35) return;
 
             //System.Windows.Forms.MessageBox.Show(linhaOK);
             var peso = obterPesoBruto(linhaOK);
-
-            //var in2 = (MethodInvoker)(() => );
-            //th0is.Invoke(in2);
+            //var taraPeso = obterTaraOriginal(linhaOK);
+            //var peso = obterPesoBruto("PB:   40,5kg PL:    0,0kg T:    0,0kg");
 
             var invoke = (MethodInvoker)(() => lblPeso.Text = peso.ToString("0.00") + " KG");
             lblPeso.Invoke(invoke);
 
-            
-
-            //obterPesoBruto("PB:+666666kg ");
-
-
         }
 
         private static Double obterPesoBruto(String pesoLido)
+        {
+            Double convertido = -1.0;
+            Double convertido2 = -1.0;
+            //String tmp = pesoLido.Substring(4, pesoLido.Length - 29 - 5);
+            if (pesoLido.Length >= 35)
+            {
+                try
+                {
+                    String tmp = pesoLido.Substring(3, 7);
+                    String tmp2 = pesoLido.Substring(16, 7);
+
+                    //MessageBox.Show("tmp: " + tmp + "\ntmp2: " + tmp2, "aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    //todo Atualizar os valores em tempo real.
+
+                    //PB:   40,5kg PL:    0,0kg T:    0,0kg
+
+                    //System.Windows.Forms.MessageBox.Show(tmp.Trim());
+                    convertido = Convert.ToDouble(tmp.Trim());
+                    convertido2 = Convert.ToDouble(tmp2.Trim());
+
+                    if (pesoLido != null)
+                    {
+                        if (convertido2 == 0)
+                            pesoBruto = tmp;
+                        else
+                        {
+                            pesoBruto = tmp2;
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    System.Windows.Forms.MessageBox.Show($"Peso lido {pesoLido} \n {e.Message.ToString()}");
+                }
+
+            }
+
+            if (convertido2 == 0)
+                return convertido;
+            else
+            {
+                return convertido2;
+            }
+        }
+
+        private static Double obterTaraOriginal(String pesoLido)
         {
             Double convertido = -1.0;
             //String tmp = pesoLido.Substring(4, pesoLido.Length - 29 - 5);
@@ -458,26 +494,32 @@ namespace MaxPrinter
             {
                 try
                 {
-                    String tmp = pesoLido.Substring(4, pesoLido.Length - 29 - 3);
+                    String tmp = pesoLido.Substring(pesoLido.Length - 2, 11);
+
+                    MessageBox.Show("tmp: " + tmp + "\ntmp2: " + tmp, "aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    //todo Atualizar os valores em tempo real.
+
+                    //PB:   40,5kg PL:    0,0kg T:    0,0kg
+
                     //System.Windows.Forms.MessageBox.Show(tmp.Trim());
                     convertido = Convert.ToDouble(tmp.Trim());
                     //pesoLido.Substring(0, pesoLido.Length - 3);
 
                     if (pesoLido != null)
                     {
-                        pesoBruto = tmp;
+                        pesoTarado = tmp;
                     }
                 }
-                catch (Exception e) {
+                catch (Exception e)
+                {
                     System.Windows.Forms.MessageBox.Show($"Peso lido {pesoLido} \n {e.Message.ToString()}");
                 }
 
-
             }
-            
 
             return convertido;
-        }
 
+        }
     }
 }
