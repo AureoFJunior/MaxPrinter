@@ -357,7 +357,7 @@ namespace MaxPrinter
             A_Prn_Text_TrueType(55, 160, 25, "Arial", 1, 750, 0, 0, 0, "AA2", "Produto", 1);
             A_Prn_Text_TrueType(55, 145, 30, "Arial", 1, 50, 0, 0, 0, "AA4", nomeProd.Trim(), 1);
             A_Prn_Text_TrueType(55, 130, 25, "Arial", 1, 750, 0, 0, 0, "AA8", "Peso Líquido:", 1);
-            A_Prn_Text_TrueType(200, 130, 25, "Arial", 1, 750, 0, 0, 0, "AA8", "Peso Tara:", 1);
+            A_Prn_Text_TrueType(200, 130, 25, "Arial", 1, 750, 0, 0, 0, "AA9", "Peso Tara:", 1);
 
 
             if (pesoTara >= 0)
@@ -369,9 +369,9 @@ namespace MaxPrinter
                 else
                 {
                     var pesoLiq = pesoBruto - pesoTara;
-                    A_Prn_Text_TrueType(150, 130, 30, "Arial", 1, 50, 0, 0, 0, "AA5", pesoLiq.ToString("0.00").Trim() + " KG", 1);
+                    A_Prn_Text_TrueType(125, 130, 30, "Arial", 1, 50, 0, 0, 0, "AA5", pesoLiq.ToString("0.00").Trim() + " KG", 1);
                     //A_Prn_Text_TrueType(250, 130, 30, "Arial", 1, 50, 0, 0, 0, "AA5", pesoTaradoF.ToString("0.00").Trim() + " KG", 1); 
-                    A_Prn_Text_TrueType(250, 130, 30, "Arial", 1, 50, 0, 0, 0, "AA5", pesoTara.ToString("0.00").Trim() + " KG", 1);
+                    A_Prn_Text_TrueType(265, 130, 30, "Arial", 1, 50, 0, 0, 0, "AA10", pesoTara.ToString("0.00").Trim() + " KG", 1);
 
                     A_Draw_Line('A', 45, 120, 280, 1);
                     A_Prn_Text_TrueType(55, 85, 30, "Arial", 1, 50, 0, 0, 0, "AA6", data.ToString(), 1);
