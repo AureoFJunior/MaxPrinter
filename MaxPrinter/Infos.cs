@@ -12,5 +12,6 @@ namespace MaxPrinter
         public Double pesoTara { get; set; }
         public Int32 qtdeCaixa { get; set; }
         public String codBar { get; set; }
+
     }
 }
