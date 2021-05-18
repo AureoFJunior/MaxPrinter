@@ -63,9 +63,9 @@ namespace MaxPrinter.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap iconfinder_error_1646012 {
+        internal static System.Drawing.Bitmap error_32 {
             get {
-                object obj = ResourceManager.GetObject("iconfinder_error_1646012", resourceCulture);
+                object obj = ResourceManager.GetObject("error_32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace MaxPrinter.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap iconfinder_printer_289614 {
+        internal static System.Drawing.Bitmap printer_32 {
             get {
-                object obj = ResourceManager.GetObject("iconfinder_printer_289614", resourceCulture);
+                object obj = ResourceManager.GetObject("printer_32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
